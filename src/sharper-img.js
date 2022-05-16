@@ -68,16 +68,6 @@ export class SharperImg extends HTMLElement {
 
   render() {
     this.innerHTML = null;
-    console.log(`
-    <img 
-      src="${this.srcconverted}" 
-      height="${this.height}" 
-      width="${this.width}" 
-      alt="${this.alt}" 
-      fetchpriority="${this.fetchpriority}"
-      decoding="${this.decoding}"
-      loading="${this.loading}"
-    />`);
     this.innerHTML = `
     <img 
       src="${this.srcconverted}" 
