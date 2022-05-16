@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0; 
+      font-family: sans-serif;
+      background-color: #ededed;
+    }
+    div {
+      padding: 20px;
+    }
+    input {
+      display: block;
+    }
+  </style>
+  <title>sharper-img</title>
+  <script>
+    // local development and mobx
+    window.process = window.process || {
+      env: {
+        NODE_ENV: "development",
+        //VERCEL: true
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <!-- one you get to mess with -->
+  <h1>Demo to mess with Sharper, Img</h1>
+  <div>
+    <label for="src">source url</label>
+    <input type="text" id="src" value="https://ftw.usatoday.com/wp-content/uploads/sites/90/2017/05/spongebob.jpg?w=1000&h=600&crop=1" size="100" />
+    <label for="height">height</label>
+    <input type="number" id="height" value="200" min="10" max="1000" />
+    <label for="width">width</label>
+    <input type="number" id="width" value="300" min="10" max="1000" />
+    <label for="quality">quality</label>
+    <input type="range" id="quality" value="80" min="5" max="100" step="5" />
+  </div>
+  <sharper-img id="target"></sharper-img>
+
+
+  <!-- this is using the base API -->
+  <sharper-img quality="60" height="300" width="450" src="https://ftw.usatoday.com/wp-content/uploads/sites/90/2017/05/spongebob.jpg?w=1000&h=600&crop=1"></sharper-img>
+
+  <!-- this is for loading from a template format and is still highly performant-->
+  <sharper-img>
+    <template>
+      <img src="https://ftw.usatoday.com/wp-content/uploads/sites/90/2017/05/spongebob.jpg?w=1000&h=600&crop=1" decoding="async" fetchpriority="low" />
+    </template>
+  </sharper-img>
+
+  <script type="module">
+    import { DeviceDetails } from "@lrnwebcomponents/replace-tag/lib/PerformanceDetect.js";
+    // see if this device is poor
+    const evaluateBadDevice = await DeviceDetails.badDevice().then(() => import('./src/sharper-img.js'));
+    function dqs(sel) {
+      return document.querySelector(sel);
+    }
+    // always expecting an array
+    function dqsa(sel) {
+      return Array.from(document.querySelectorAll(sel));
+    }
+    // vercel local dev
+    dqsa("sharper-img").forEach((node) => {
+      if (!window.process.env.VERCEL) {
+        node.baseurl = "http://localhost:3000";
+        node.render();
+      }
+      if (evaluateBadDevice) {
+        node.quality = 5;
+      }
+    });
+    // demo
+    const target = dqs('#target');
+    dqsa('input').forEach((node) => {
+      target[node.getAttribute('id')] = node.value;
+      node.addEventListener('input', (e) => {
+        target[e.target.getAttribute('id')] = e.target.value;
+      });
+    });
+  </script>
+</body>
+
+</html>
