@@ -15,13 +15,13 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "lit": "2.2.3",
-    "sharp": "0.30.4",
     "@lrnwebcomponents/replace-tag": "4.0.24",
+    "sharp": "0.30.4",
     "node-fetch": "3.2.4"
   },
   "type": "module",
   "devDependencies": {
+    "lit": "2.2.3",
     "@babel/preset-env": "^7.16.4",
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/building-rollup": "^2.0.1",

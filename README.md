@@ -2,17 +2,26 @@
   <img width="200" src="https://open-wc.org/hero.png"></img>
 </p>
 
-## Open-wc Starter App
+## sharper-img
 
 [![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
 
 ## Quickstart
 
-To get started:
+This is a web component that uses vercel in order to dynamically convert an image from it's default request into a size / quality requested.
+`./src/sharper-img.js` contains the vanillaJS version demo'ed and there is also a `./src/sharper-img-lit.js` which is a lit implementation.
 
-```bash
-npm init @open-wc
-# requires node 10 & npm 6 or higher
+### basic usage
+```html
+  <!-- this is using the base API -->
+  <sharper-img quality="60" height="300" width="450" src="https://ftw.usatoday.com/wp-content/uploads/sites/90/2017/05/spongebob.jpg?w=1000&h=600&crop=1"></sharper-img>
+
+  <!-- this is for loading from a template format and is still highly performant-->
+  <sharper-img>
+    <template>
+      <img src="https://ftw.usatoday.com/wp-content/uploads/sites/90/2017/05/spongebob.jpg?w=1000&h=600&crop=1" decoding="async" fetchpriority="low" />
+    </template>
+  </sharper-img>
 ```
 
 ## Scripts
